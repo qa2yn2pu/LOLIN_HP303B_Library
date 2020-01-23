@@ -1319,6 +1319,9 @@ int32_t LOLIN_HP303B::calcTemp(int32_t raw)
 	//Calculate compensated temperature
 	temp = m_c0Half + m_c1 * temp;
 
+	//include fractional part into result
+	temp *= 100;
+
 	//return temperature
 	return (int32_t)temp;
 }
@@ -1339,6 +1342,9 @@ int32_t LOLIN_HP303B::calcPressure(int32_t raw)
 	prs =   m_c00
 			+ prs * (m_c10 + prs * (m_c20 + prs * m_c30))
 			+ m_lastTempScal * (m_c01 + prs * (m_c11 + prs * m_c21));
+
+	//include fractional part into result
+	prs *= 100;
 
 	//return pressure
 	return (int32_t)prs;
